@@ -1,4 +1,4 @@
-"use strict" // Este por ejemplo no te deja agregar una variable en el aire sin declararla primero
+/*"use strict" // Este por ejemplo no te deja agregar una variable en el aire sin declararla primero
 
 
 const producto = {
@@ -19,3 +19,15 @@ Object.freeze( producto ); // Congela por consiguiente las dos lineas de comando
 
 console.log(producto);
 console.log(Object.isFrozen(producto));
+*/
+
+
+const producto ={
+    nombre:"Monitor",  
+    disponibilidad:true,
+    precio:300}
+
+    console.log(producto);
+    Object.freeze(producto);//De este modo se congela el Obj
+
+    producto.disponibilidad= false; //no genera cambios

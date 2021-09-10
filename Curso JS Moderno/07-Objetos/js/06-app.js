@@ -1,4 +1,4 @@
-const producto = {
+/*const producto = {
     nombre: "Monitor 20 Pulgadas", //DATO IMPORTANTE, se separa con comas
     precio: 300,
     disponible: true,
@@ -23,4 +23,27 @@ const { informacion: { Fabricacion: {Pais}} } = producto;
 console.log(nombre);
 console.log(Fabricacion);
 console.log( Pais );
+*/
 
+
+var producto ={
+    nombre:"Monitor",  
+    disponibilidad:"true",
+    precio:300,
+    informacion:{
+        color:"blanco",
+        peso:"1kg"
+    },
+    fabricacion:{
+        pais:"China"
+    }
+    }
+
+    //si quiero acceder y crear variable con DESTRUCTURING se hace de la siguiente manera:
+
+    var {nombre, informacion} = producto;          //En ésta línea crea variables de nombre e informacion 
+    var {nombre, informacion:{peso}} =producto;    //La variable información desaparece como tal sin embargo se crea la variable "peso"
+
+    console.log(nombre);
+    console.log(informacion);
+    console.log(peso);

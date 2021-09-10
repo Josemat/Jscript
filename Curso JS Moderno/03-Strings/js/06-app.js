@@ -12,4 +12,4 @@ const actividad = "estoy aprendiendo JavaScript moderno";
 console.log(actividad.split(" ")); //va a separar todo en los espacios
 
 const hobbies="Leer, cantar, caminar, escuchar musica, pescar";
-console.log(hobbies.split(","));
+console.log(hobbies.split(",").trim());
