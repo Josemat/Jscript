@@ -27,7 +27,10 @@ const producto ={
     disponibilidad:true,
     precio:300}
 
-    console.log(producto);
     Object.freeze(producto);//De este modo se congela el Obj
 
     producto.disponibilidad= false; //no genera cambios
+    console.log(Object.isFrozen(producto));// de ésta forma se sabe si está congelado el obj
+    producto.color = 'Blanco';
+
+    console.log(producto);
