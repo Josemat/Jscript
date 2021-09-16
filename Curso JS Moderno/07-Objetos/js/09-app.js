@@ -24,10 +24,9 @@ const producto ={
     disponibilidad:true,
     precio:300}
 
-    Object.freeze(producto);//De este modo se congela el Obj
+    Object.seal(producto);//.seal no te permite agregar o borrar propiedades pero si modificar las existentes
 
     producto.disponibilidad= false; //no genera cambios
-    console.log(Object.isFrozen(producto));// de ésta forma se sabe si está congelado el obj
     producto.color = 'Blanco';
 
     console.log(producto);
