@@ -1,0 +1,1 @@
+//Libreria de funciones nativas
