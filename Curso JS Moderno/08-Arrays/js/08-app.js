@@ -8,4 +8,9 @@ const {nombre, precio} = producto //se extraen los valores y se los convierte en
 console.log(nombre)
 //Destructuring con arrays--------------------------------------
 const numeros = [10,20,30,40]
-
+console.table(numeros)
+const [primero, segundo, ...tercero] = numeros
+console.log(segundo, primero, tercero)
+const array2 = [1,2,3,45,6,7,8]
+const [ , , ,cuarentaYcinco] = array2
+console.log(cuarentaYcinco)
