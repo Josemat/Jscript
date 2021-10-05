@@ -12,12 +12,15 @@ const resultado = sumar(5,2);
 
 let total = 0;
 function agregarCarrito(precio){
-return total+=precio
+    return total += precio;
 }
-function calcularImpuestos(){
-    return total ? 
-}
-agregarCarrito(300)
-agregarCarrito(100)
+function agregarImpuesto(){
+    return total * 1.15;
 
-console.log(total)
+}
+agregarCarrito(100);
+agregarCarrito(200);
+agregarCarrito(200);
+console.log(`El valor de los productos sería: ${total}`);
+const conImpuesto = agregarImpuesto(total)
+console.log(`El total con el 15% de impuesto sería de: ${conImpuesto}`)
