@@ -13,7 +13,7 @@ carrito.map(function(productos){                                                
 const nuevoArray = carrito.forEach(function(productos){ //Este sale comoo undefined
     return `Producto: ${productos.nombre} cuesta: ${productos.precio}`
 })
-const nuevoArray2 = carrito.map(function(productos){            //Este es el que funciona, ya que crea un nuevo array a partir de los valores retornados
+const nuevoArray2 = carrito.map(function(productos){ //Este es el que funciona, ya que crea un nuevo array a partir de los valores retornados (return) y los asigna a la variable "nuevoArray". Cosa que el forEach no puede hacer
     return `Prod: ${productos.nombre} money:${productos.precio}`
 })
 

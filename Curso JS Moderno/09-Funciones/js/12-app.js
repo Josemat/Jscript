@@ -9,6 +9,8 @@ const carrito = [
 const compra = carrito.forEach(function(nombre){
     console.log(`${nombre.nombre}`)
 })
+//La funcion se puede reemplazar con un arrow Function de la siguiente manera
+carrito.forEach(presio=>console.log(`El precio es ${presio.precio}`))
+// const compra2 = carrito.map(presio=>`El precio es ${presio.precio}`);
+// console.log(compra2)
 
-const compra2 = carrito.forEach(presio=>`El precio es ${presio.precio}`);
-console.log(compra2)
