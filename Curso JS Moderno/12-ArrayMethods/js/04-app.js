@@ -8,9 +8,10 @@ const carrito = [
 ]
 
 //Uso de .filter
+//Con .filter podes traer mas de un valor
 let resultado;
 resultado = carrito.filter(producto => producto.precio === 300);
-resultado = carrito.filter(producto => producto.precio !== 300);
+resultado = carrito.filter(producto => producto.precio !== 300); 
 
 
 console.table(resultado)
