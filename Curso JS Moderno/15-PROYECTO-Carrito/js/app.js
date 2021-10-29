@@ -1,19 +1,25 @@
-//Variables
-const carrito = document.querySelector('#carrito')
-const contenedorCarrito = document.querySelector('#lista-carrito tbody')
+const listaCarrito = document.querySelector('#lista-carrito tbody')
 const listaCursos = document.querySelector('#lista-cursos')
+listaCursos.addEventListener('click',seleccion)
 
-listaCursos.addEventListener('click',agregarCurso)
-
-
-
-//Funciones
-function agregarCurso(e){
-    e.preventDefault();
-    if(e.target.classList.contains('agregar-carrito')){
-    console.log('Agregaste algo')
-    console.log(e.target.parentElement.parentElement) //Con este averiguamos el parent completo
-    }
+function seleccion(e){
+    e.preventDefault()
+   if(e.target.classList.contains('agregar-carrito')){
+       const tarjetaElegida = e.target.parentElement.parentElement
+    otraSeleccion(tarjetaElegida)}
 }
+function otraSeleccion(tar){
+    const datosTarjeta={
+        foto: tar.querySelector('img').src,
+        texto: tar.querySelector('h4').textContent,
+        precio: tar.querySelector('span').textContent,
+        cantidad:1,
+        id: tar.querySelector('a').getAttribute('data-id'),
+    }
 
-//Seleccionar el padrex2
+    //Agergar elementos al carrito
+
+    articulos = [...articulos, datosTarjeta]    
+    console.log(articulos)
+}
+let articulos = [];
