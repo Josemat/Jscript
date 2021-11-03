@@ -8,6 +8,11 @@ let articulosCarrito = [];
 cargarEventListeners()
 function cargarEventListeners(){
     listaCursos.addEventListener('click',agregarCurso)
+    carrito.addEventListener('click', eliminarCurso)
+    vaciarCarrito.addEventListener('click', ()=>{
+        articulosCarrito=[]
+        limpiarHTML()
+    })
 }
 //funciones
 function agregarCurso(e){
@@ -17,6 +22,14 @@ function agregarCurso(e){
         leerDatosCurso(cursoSeleccionado)
     }
 }
+function eliminarCurso(e){
+if(e.target.classList.contains('borrar-curso')){
+    const borrar = e.target.getAttribute('data-id')
+    articulosCarrito = articulosCarrito.filter(curso=>curso.id !== borrar)
+    carritoHTML()
+}
+}
+//vaciar Carrito
 
 //lee el contenido del html al que le dimos click y extrae la info del curso
 
