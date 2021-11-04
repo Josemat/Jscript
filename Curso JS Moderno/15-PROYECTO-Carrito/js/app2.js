@@ -2,16 +2,23 @@
 const seleccionCurso = document.querySelector('#lista-cursos')
 const carrito = document.querySelector('#lista-carrito tbody')
 const borrarCurso = document.querySelector('#lista-carrito')
+const vaciarCarrito = document.querySelector('#vaciar-carrito')
 let listaCursos = []
 
 
 seleccionCurso.addEventListener('click', cursoSeleccionado)
 borrarCurso.addEventListener('click', borrar)
+vaciarCarrito.addEventListener('click', ()=>{
+    listaCursos=[]
+    limpiarHTML()
+})
 
 function borrar(e){
-    limpiarHTML()
-    listaCursos.filter(e=>e.id !== e.target.getAttribute('id'))//Todo mal
-
+    if(e.target.classList.contains('borrar-curso')){
+        const borrado = e.target.getAttribute('id')
+        listaCursos = listaCursos.filter(curso=>curso.id !== borrado)
+        iterado(listaCursos)
+    }
 }
 
 function cursoSeleccionado(e){
