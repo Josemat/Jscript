@@ -4,7 +4,8 @@ const email = document.querySelector('#email')
 const asunto = document.querySelector('#asunto')
 const mensaje = document.querySelector('#mensaje')
 const formulario = document.querySelector('#enviar-mail')
-
+const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const spinner = document.querySelector('#spinner')
 
 
 eventListeners()
@@ -13,6 +14,7 @@ function eventListeners(){
     email.addEventListener('blur', validarFormulario)
     asunto.addEventListener('blur', validarFormulario)
     mensaje.addEventListener('blur', validarFormulario)
+    formulario.addEventListener('submit', enviarEmail)
 }
 
 //Funciones
@@ -39,7 +41,6 @@ function validarFormulario(e){
 
         }
     if(e.target.type === 'email'){
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         
         // console.log(re.test(e.target.value), 'probando expresion regular')
         if(re.test(e.target.value)){
@@ -54,7 +55,12 @@ function validarFormulario(e){
             mensajeError('Email no válido')
             
         }
-    }    
+    }
+    
+    if(re.test(email.value) && asunto.value !== '' && mensaje.value !==''){
+        btnEnviar.disabled=false
+        btnEnviar.classList.remove('opacity-50', 'cursor-not-allowed')
+    }
 }
 function mensajeError(mensaje){
     const errors = document.createElement('p')
@@ -67,4 +73,21 @@ function mensajeError(mensaje){
         formulario.appendChild(errors)
         
     }
+}
+function enviarEmail(e){
+    e.preventDefault()
+    spinner.style.display= 'flex'
+    
+    setTimeout(()=>{
+        spinner.style.display = 'none'
+        const mensajeEnviado = document.createElement('p')
+        mensajeEnviado.textContent = 'Mensaje enviado correctamente'
+        mensajeEnviado.classList.add('text-center','uppercase', 'bg-green-300','p-2','m-2')
+        formulario.insertBefore(mensajeEnviado,spinner)
+        setTimeout(()=>{
+            formulario.reset()//Es un metodo que sirve para resetear un formulario
+            iniciarApp()
+            mensajeEnviado.remove()
+            },5000)
+    }, 2000)
 }
