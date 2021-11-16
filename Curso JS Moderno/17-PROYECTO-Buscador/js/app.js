@@ -26,7 +26,7 @@ const datosBusqueda = {
 //Eventlisteners
 
 document.addEventListener('DOMContentLoaded',()=>{
-    mostrarAutos()
+    mostrarAutos(autos)
     //Llenar el year
     llenarSelect()
     
@@ -43,29 +43,35 @@ year.addEventListener('change', e=>{
 })
 minimo.addEventListener('change', e=>{
     datosBusqueda.minimo = e.target.value
+    filtrarAuto()
 })
 maximo.addEventListener('change', e=>{
     datosBusqueda.maximo = e.target.value
+    filtrarAuto()
 })
 puertas.addEventListener('change', e=>{
-    datosBusqueda.puertas = e.target.value
+    datosBusqueda.puertas = parseInt(e.target.value)
+    
+    filtrarAuto()
 })
 transmision.addEventListener('change', e=>{
     datosBusqueda.transmision = e.target.value
+    filtrarAuto()
 })
 color.addEventListener('change', e=>{
     datosBusqueda.color = e.target.value
+    filtrarAuto()
     
 })
 
 
 
 //Funciones
-function mostrarAutos(){
+function mostrarAutos(autoFiltrado){
 
-    limpiarHTML
+    limpiarHTML()
 
-    autos.forEach(auto => {
+    autoFiltrado.forEach(auto => {
         const  {marca, modelo, year, precio, puertas, color, transmision}= auto
         const vehiculo = document.createElement('p')
         vehiculo.innerHTML=`${marca} ${modelo} ${year} - Color: ${color} - Puertas:${puertas} - Transmisión: ${transmision} - Precio: ${precio}`
@@ -87,8 +93,9 @@ function llenarSelect(){
 //Funcion que filtra en base a la busqueda
 
     function filtrarAuto(){
-        const resultado = autos.filter( filtrarMarca ).filter( filtrarYear )
+        const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtroMinimo ).filter( filtroMaximo ).filter( filtrarPuertas ).filter( filtrarTransmision ).filter( filtrarColor )
         console.log(resultado)
+        mostrarAutos(resultado)
 
     }
 
@@ -108,8 +115,40 @@ function llenarSelect(){
         return auto
     }
 
+    function filtroMinimo(auto){
+        const {minimo} = datosBusqueda   // Se puede generar destructuring para hacer el codigo mas limpio
+        if(minimo){ 
+            return auto.precio >= minimo
+        }
+        return auto.precio
+    }
 
+    function filtroMaximo(euto){
+        const {maximo} = datosBusqueda
+        if(maximo){
+            return euto.precio <= maximo
+        }
+        return euto.precio
+    }
 
+    function filtrarPuertas(auto){
+        if(datosBusqueda.puertas){
+            return auto.puertas === datosBusqueda.puertas
+        }
+        return auto.puertas
+    }
+    function filtrarTransmision(autos){
+        if(datosBusqueda.transmision){
+            return autos.transmision === datosBusqueda.transmision
+        }
+        return autos.transmision
+    }
+    function filtrarColor(autos){
+        if (datosBusqueda.color){
+            return autos.color === datosBusqueda.color
+        }
+        return autos.color
+    }
 
 
 
