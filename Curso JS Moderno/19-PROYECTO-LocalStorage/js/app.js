@@ -1,6 +1,7 @@
 const formulario = document.querySelector('#formulario');
 const tweets = document.querySelector('#lista-tweets');
-const contenido = document.querySelector('#contenido')
+const contenido = document.querySelector('#contenido');
+const borrar = document.querySelector('.borrar-tweet')
 let listaTweets = [];
 
 
@@ -8,8 +9,22 @@ let listaTweets = [];
 cargarEventListeners()
 function cargarEventListeners(){
     formulario.addEventListener('submit', agergarTweet)
-}
+    document.addEventListener('DOMContentLoaded', ()=>{
+        listaTweets = JSON.parse(localStorage.getItem('tweets')) || [] // Se le pone un OR y un array vacio, ya que si no entrega error porque cuando esta vacio entrega un primer valor null al leer del localStorage vacio y al parsearlo el valor es listaTweets = null, las demas funciones que le siguen, por ejemplo la de la linea 37 que es un spread operator(array) con un valor null modifica el mismo, generando error
+        // console.log(listaTweets)
+        // console.log(typeof listaTweets)
+        crearHTML()
+    })
+    tweets.addEventListener('click', eliminarTw)
 
+}
+function eliminarTw(e){
+    const id = parseInt(e.target.id)
+    
+    listaTweets = listaTweets.filter(tweet=> tweet.id !== id)
+    
+    crearHTML()
+}
 
 
 
@@ -29,22 +44,34 @@ function agergarTweet(e){
     }
     //Vamos iterando y agregando valores al array
     listaTweets = [...listaTweets, tweetOBJ]
-    console.log(listaTweets)
+    
     crearHTML(listaTweets);
+    //Reiniciar el formulario
+    formulario.reset();
+    sincronizarLocalSt()
 
 }
+
+function sincronizarLocalSt(){
+     localStorage.setItem('tweets', JSON.stringify(listaTweets))
+}
+
+
+
 //Creamos el HTML
 
 function crearHTML(){
     
     limpiarHTML()
+    
     if(!listaTweets){
         console.log('Entra acá')
         return
     }
+    
     listaTweets.forEach(element => {
             const creartweet = document.createElement('ul')
-            creartweet.innerHTML = `<li>${element.tweet}<a href="#" id="borrartw" class="borrar-tweet"> X </a> </li>`
+            creartweet.innerHTML = `<li>${element.tweet}<a href="#" id="${element.id}" class="borrar-tweet"> X </a> </li>`
             tweets.appendChild(creartweet)
             });
     
