@@ -1,5 +1,5 @@
 # Jscript
-Curso de 38hs de Udemy
+Curso de 40hs de Udemy
  JavaScript Moderno Guía Definitiva
 <a href="https://www.udemy.com/course/javascript-moderno-guia-definitiva-construye-10-proyectos/" target="_blank">Ir al curso en Udemy</a><br>
 El curso incluye ES6, ES7, ES8, ES9 y ES10
