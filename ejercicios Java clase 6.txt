@@ -1,0 +1,65 @@
+CLASE 6
+
+Ejercicio 1:
+Scanner myObj = new Scanner(System.in); //Se lo instancia como un objeto
+System.out.println("Ingrese ancho del terreno");
+int ancho = myObj.nextInt();
+System.out.println("Ingrese el largo del terreno");
+int largo = myObj.nextInt();
+int suma = (largo*2)+ (ancho*2) ;
+System.out.println("El perimetro del terreno es:" + suma);
+
+
+
+
+
+
+myObj.close();	//Recordar cerrar el obj de scanner para que no tenga "memory leaks"
+
+Ejercicio 2:
+
+import java.util.Scanner;
+public class OtraClase {
+
+	public static void main(String[] args) {
+	Scanner sc = new Scanner(System.in);
+	System.out.println("ingrese 2 numeros para mostrar sus correspondientes...");
+	Double uno = sc.nextDouble();
+	Double dos = sc.nextDouble();
+	
+	Double suma = uno+dos;
+	Double resta = uno-dos;
+	Double multiDouble = uno*dos;
+	Double diviDouble = uno/dos;
+	
+	System.out.println("La suma es:" + suma);
+	System.out.println("La resta es:" +resta);
+	System.out.println("La multiplicacion es:" +multiDouble);
+	System.out.println("La division es:" + diviDouble);
+	sc.close();
+	}}
+
+
+EJERCICIO 3:
+
+import java.util.Scanner;
+public class OtraClase {
+
+	public static void main(String[] args) {
+		Scanner Sc = new Scanner(System.in);
+		System.out.println("puede pintar 3,6 metros cuadrados por cada medio litro. Ingrese el largo y alto de la pared a pintar");
+		System.out.println("ingrese alto:");
+		Double alto =  Sc.nextDouble();
+		System.out.println("ingrese largo:");
+		Double largo = Sc.nextDouble();
+	
+		Double resultado = (largo*alto)/7.2;
+		System.out.println("El resultado es: " + resultado);
+		
+		
+		
+	Sc.close();}}
+
+
+
+EJERCICIO 4:
