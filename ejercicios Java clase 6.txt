@@ -63,3 +63,30 @@ public class OtraClase {
 
 
 EJERCICIO 4:
+
+import java.util.*;
+
+public class EjerciciosClase6 {
+
+	public static void main(String[] args) {
+		Scanner	sc = new Scanner(System.in);
+		System.out.println("Ingrese numero entero A");
+		int uno = sc.nextInt();
+		System.out.println("Ingrese numero entero B");
+		int dos = sc.nextInt();
+		int tres = 0;
+		tres = uno;
+		uno = dos ;
+		
+		System.out.println("El valor de A es: "+ uno);
+		System.out.println("El valor de B es: " + tres);
+	
+	
+	
+	
+	
+	
+	sc.close();}
+
+}
+
