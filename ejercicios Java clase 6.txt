@@ -90,3 +90,19 @@ public class EjerciciosClase6 {
 
 }
 
+
+EJERCICIO % y un poco mas:
+
+
+
+	Scanner sc = new Scanner(System.in);
+	System.out.println("Ingrese para saber si es par o impar:");
+	int valor = sc.nextInt();
+	if(valor%2 == 0) {
+		System.out.println("El valor a ingresado es par");
+	}
+	System.out.println("El valor ingresado potenciado al cuadrado es: "+ Math.pow(valor, 2));
+
+	System.out.println("El valor ingresado potenciado al cubo es: "+ Math.pow(valor, 3));
+	
+	sc.close();
