@@ -106,3 +106,33 @@ EJERCICIO % y un poco mas:
 	System.out.println("El valor ingresado potenciado al cubo es: "+ Math.pow(valor, 3));
 	
 	sc.close();
+
+
+EJERCICIO BUBBLING:
+
+import java.util.Arrays;
+
+//import java.util.Scanner;
+public class OtraClase {
+
+	public static void main(String[] args) {
+		int[] miArray = {5 , 3 , 2 , 1 , 4 , 7 , 6 };
+	for(int h=0;h<miArray.length -1; h++ ) {	
+		for(int i=0;i < miArray.length -1;i++ ) {
+		System.out.println("A: "+miArray[i]);
+		System.out.println("B: "+miArray[i+1]);
+		if(miArray[i]>miArray[i+1]) {
+			int temporal = miArray[i+1];
+			miArray[i+1]=miArray[i];
+			miArray[i]=temporal;
+			System.out.println("A1: "+miArray[i]);
+			System.out.println("B2: "+miArray[i+1]);
+			System.out.println("Vuelta numero" + i);
+//			System.out.println("A2: "+ Arrays.toString(miArray));
+			
+		}
+
+	}}
+	System.out.println(Arrays.toString(miArray));
+	}}
+
