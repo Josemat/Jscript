@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -18,6 +20,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JList;
 import javax.swing.JTextPane;
 import customers.domain.customer;
+import javax.swing.SwingConstants;
 
 public class CreateCustomer extends JFrame {
 
@@ -27,6 +30,7 @@ public class CreateCustomer extends JFrame {
 	private JTextField textFieldNatId;
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
+	private JLabel mostrarListaClientes;
 
 	/**
 	 * Launch the application.
@@ -92,7 +96,19 @@ public class CreateCustomer extends JFrame {
 		ArrayList<customer> arrayCustomer = new ArrayList<>();
 		
 		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addMouseListener(new MouseAdapter() {
+		
+		btnAceptar.setBounds(102, 179, 89, 23);
+		contentPane.add(btnAceptar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(218, 179, 89, 23);
+		contentPane.add(btnCancelar);
+		
+		mostrarListaClientes = new JLabel("");
+		mostrarListaClientes.setLabelFor(textFieldName);
+		mostrarListaClientes.setBounds(10, 216, 369, 181);
+		contentPane.add(mostrarListaClientes);
+	btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
@@ -101,18 +117,20 @@ public class CreateCustomer extends JFrame {
 				newCustomer.setLastName(textFieldLastName.getText());
 				newCustomer.setNationalId(textFieldNatId.getText());
 				arrayCustomer.add(newCustomer);
-			System.out.println(arrayCustomer);
+				textFieldLastName.setText("");
+				textFieldName.setText("");
+				textFieldNatId.setText("");
+				
+				for (int i = 0; i < arrayCustomer.size(); i++) {
+
+
+					mostrarListaClientes.setText(arrayCustomer.get(i).getFirstName());
+//					System.out.println(arrayCustomer.get(i)+ "get");
+//					System.out.println(arrayCustomer.get(i).toString()+ "get.tostring");
+
+					
+				}
 			}
 		});
-		btnAceptar.setBounds(102, 179, 89, 23);
-		contentPane.add(btnAceptar);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(218, 179, 89, 23);
-		contentPane.add(btnCancelar);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(87, 216, 287, 154);
-		contentPane.add(textArea);
 	}
 }
