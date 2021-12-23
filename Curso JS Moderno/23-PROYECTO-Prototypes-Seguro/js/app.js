@@ -45,7 +45,7 @@ if(this.tipo === 'basico'){
 }else if(this.tipo === "completo"){
     cantidad = cantidad* 1.5
 }
-
+return cantidad
 }
 
 function UI(){};
@@ -84,8 +84,42 @@ UI.prototype.mostrarAlerta = (mensaje, tipo)=>{
     },2000)
 }
 
-UI.prototype.mostrarValores = function(){
+UI.prototype.mostrarValores = (total, seguro)=>{
+    const {marca,year,tipo} = seguro
+    const div = document.createElement('div');
+    div.classList.add('mt-10')
     
+    let marcaString = "";
+    switch (marca) {
+        case '1':
+            marcaString = "Americano";
+            break;
+        case '2':
+            marcaString = "Asiatico";
+            break;
+        case '3':
+            marcaString = "Europeo";
+            break;
+    
+        default:
+            break;
+    }
+
+    div.innerHTML=`
+    <p class="header">Tu resumen</p>
+    <p class="font-bold">El seguro va a costar: <span class="font-medium">$${total}</span></p>
+    <p class="font-bold">El año del vehiculo es ${year} </p>
+    <p class="font-bold">El vehiculo es ${marcaString} </p>
+    <p class="font-bold">El tipo de seguro es ${tipo} </p>
+    
+    `;
+    const form = document.querySelector("#resultado");
+    const spinner = document.querySelector('#cargando')
+    spinner.style.display = 'block';
+    setTimeout(()=>{
+        spinner.style.display= 'none'
+       form.appendChild(div)
+    },2000)
 }
 
 //Instanciar UI
@@ -116,9 +150,14 @@ function validarFormulario(){
 //Instanciar el seguro
       const seguro = new Seguro(valorMarca, valorYear, valorTipo)
       const total =  seguro.cotizarSeguro();
+      
+
+      //Borrar el resultado previo
+      const resultadoP = document.querySelector('#resultado div')
+        if(resultadoP){resultadoP.remove()}
 
 //utilizar el prototype que vamos a utilizar para la interfaz
-
+        ui.mostrarValores(total, seguro)
 
       
     })}
