@@ -13,9 +13,39 @@ americano = 1.15
 asiatico  = 1.05
 europeo = 1.35
 */
-console.log(this.tipo)
-console.log(this.marca)
-console.log(this.year)
+let cantidad;
+const valorBase = 2000;
+
+
+switch (this.marca) {
+    case "1":
+        cantidad = valorBase* 1.15;
+        break;
+    case '2':
+        cantidad = valorBase * 1.05;
+        break
+    case '3':
+        cantidad = valorBase * 1.35;
+        break;
+    default:
+        break;
+        
+}
+
+
+//Aca vamos a hacer que suba un 3% por cada año
+const porcentaje = 0.03;
+const diferenciaDeAnios = new Date().getFullYear() - this.year
+cantidad = (1-(porcentaje*diferenciaDeAnios))*cantidad;
+
+
+if(this.tipo === 'basico'){
+    cantidad = cantidad* 1.30
+
+}else if(this.tipo === "completo"){
+    cantidad = cantidad* 1.5
+}
+
 }
 
 function UI(){};
@@ -54,6 +84,10 @@ UI.prototype.mostrarAlerta = (mensaje, tipo)=>{
     },2000)
 }
 
+UI.prototype.mostrarValores = function(){
+    
+}
+
 //Instanciar UI
 const ui = new UI();    
 
@@ -81,8 +115,10 @@ function validarFormulario(){
         }
 //Instanciar el seguro
       const seguro = new Seguro(valorMarca, valorYear, valorTipo)
-      seguro.cotizarSeguro()
-//
+      const total =  seguro.cotizarSeguro();
+
+//utilizar el prototype que vamos a utilizar para la interfaz
+
 
       
     })}
