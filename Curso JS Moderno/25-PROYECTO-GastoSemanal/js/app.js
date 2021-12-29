@@ -30,7 +30,12 @@ class Presupuesto{
     guardarGasto(gastoNuevo){
 
         this.gastos = [...this.gastos, gastoNuevo]
-        console.log(this.gastos)
+        this.calcularRestante()
+    }
+
+    calcularRestante(){
+        const gastado = this.gastos.reduce((total, gasto )=>total + gasto.cantidad, 0)
+        this.restante = this.presupuesto - gastado
         
     }
 
@@ -69,10 +74,46 @@ class UI{
         
     }
     agregarGastoListado(gastos){
+
+        this.limpiarHTML()
+
         //Iterar sobre los gastos
-        console.log(gastos)
+        gastos.forEach(element => {
+
+        // Crear Li
+        const crearLista = document.createElement('li')
+        crearLista.className = 'list-group-item d-flex justify-content-between align-items-center';
+        crearLista.dataset.id = element.id
+        // Crear HTML del gasto
+        crearLista.innerHTML = `${element.gasto} <span class="badge badge-primary badge-pill">$ ${element.cantidad} </span> `
+
+        //Crear Boton
+        const btn = document.createElement('button')
+        btn.classList.add('btn', 'btn-danger', 'borrar-gasto')
+        btn.textContent="Borrar"
+
+        crearLista.appendChild(btn)
+
+        //Agregar al html
+        gastoListado.appendChild(crearLista)
+
+
+
+        });
+        
 
     }
+
+    limpiarHTML(){
+        while(gastoListado.firstChild){
+            gastoListado.removeChild(gastoListado.firstChild)
+        }
+    }
+    actualizarRestante(restante){
+        document.querySelector('#restante').textContent = restante
+
+    }
+   
 
 }
 
@@ -100,7 +141,7 @@ function preguntarpresupuesto(){
 function agregarGasto(e){
     e.preventDefault()
     const gasto = document.querySelector('#gasto').value
-    const cantidad = document.querySelector('#cantidad').value
+    const cantidad = Number(document.querySelector('#cantidad').value)
 
     if(gasto === '' || cantidad === ''){
         ui.imprimirAlerta('Ambos campos son obligatorios.', 'error')
@@ -112,11 +153,15 @@ function agregarGasto(e){
 
 
     // Crear objeto gasto
-    const gastoObjeto = {gasto, presupuesto, id: Date.now()}
+    const gastoObjeto = {gasto, cantidad, id: Date.now()}
     presupuesto.guardarGasto(gastoObjeto)
 
-    const { gastos } = presupuesto
+    const { gastos, restante } = presupuesto
+    
     ui.agregarGastoListado(gastos)
+
+    ui.actualizarRestante(restante)
+
     formulario.reset()
     
 }
