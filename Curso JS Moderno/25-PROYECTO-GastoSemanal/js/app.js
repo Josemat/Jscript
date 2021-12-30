@@ -4,12 +4,6 @@ const formulario = document.querySelector('#agregar-gasto');
 const gastoListado = document.querySelector('#gastos ul');
 
 
-
-
-
-
-
-
 // Eventos
 eventListeners()
 function eventListeners(){
@@ -17,8 +11,6 @@ function eventListeners(){
 }
 formulario.addEventListener('submit',agregarGasto)
  
-
-
 
 //Clases
 class Presupuesto{
@@ -37,6 +29,12 @@ class Presupuesto{
         const gastado = this.gastos.reduce((total, gasto )=>total + gasto.cantidad, 0)
         this.restante = this.presupuesto - gastado
         
+    }
+    eliminarGasto(id){
+       this.gastos = this.gastos.filter(array => array.id !== id)
+       ui.agregarGastoListado(this.gastos)
+       this.calcularRestante()
+       
     }
 
 }
@@ -79,26 +77,28 @@ class UI{
 
         //Iterar sobre los gastos
         gastos.forEach(element => {
+            const {id, gasto, cantidad} = element
 
         // Crear Li
         const crearLista = document.createElement('li')
         crearLista.className = 'list-group-item d-flex justify-content-between align-items-center';
-        crearLista.dataset.id = element.id
+        crearLista.dataset.id =id
         // Crear HTML del gasto
-        crearLista.innerHTML = `${element.gasto} <span class="badge badge-primary badge-pill">$ ${element.cantidad} </span> `
+        crearLista.innerHTML = `${gasto} <span class="badge badge-primary badge-pill">$ ${cantidad} </span> `
 
         //Crear Boton
         const btn = document.createElement('button')
         btn.classList.add('btn', 'btn-danger', 'borrar-gasto')
         btn.textContent="Borrar"
+        btn.onclick= ()=>{
+            eliminarGasto(id)
+        }
 
         crearLista.appendChild(btn)
 
         //Agregar al html
         gastoListado.appendChild(crearLista)
-
-
-
+        
         });
         
 
@@ -111,8 +111,27 @@ class UI{
     }
     actualizarRestante(restante){
         document.querySelector('#restante').textContent = restante
+        
+        //Actualizar color restante
+        const total = Number(document.querySelector('#total').textContent)
+        if((total/4)>=restante){
+            document.querySelector('.restante').classList.remove('alert-success','alert-warning')
+            document.querySelector('.restante').classList.add('alert-danger')
+        }else if( (total/2)>=restante){
+            document.querySelector('.restante').classList.remove('alert-success', 'alert-danger')
+            document.querySelector('.restante').classList.add('alert-warning')
+        }else{
+            document.querySelector('.restante').classList.remove('alert-warning')
+            document.querySelector('.restante').classList.remove('alert-danger')
+            document.querySelector('.restante').classList.add('alert-success')
+        }
+        if(restante <= 0){
+            ui.imprimirAlerta('El presupuesto se ha agotado', 'error')
+            document.querySelector('button[type="submit"]').disabled = true
+        }
 
     }
+
    
 
 }
@@ -145,8 +164,10 @@ function agregarGasto(e){
 
     if(gasto === '' || cantidad === ''){
         ui.imprimirAlerta('Ambos campos son obligatorios.', 'error')
+        return
     }else if(cantidad <= 0 || isNaN(cantidad)){
         ui.imprimirAlerta('El valor ingresado debe ser un número y mayor a cero', 'alert')
+        return
     }else{
         ui.imprimirAlerta('Gasto añadido exitosamente' , 'success')
     }
@@ -161,7 +182,16 @@ function agregarGasto(e){
     ui.agregarGastoListado(gastos)
 
     ui.actualizarRestante(restante)
-
     formulario.reset()
     
+}
+
+function eliminarGasto(id){
+    presupuesto.eliminarGasto(id)
+
+    const { gastos, restante } = presupuesto
+
+    ui.actualizarRestante(restante)
+    ui.insertarPresupuesto(presupuesto)
+    ui.agregarGastoListado(gastos)
 }
