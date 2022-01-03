@@ -121,8 +121,7 @@ class UI{
             document.querySelector('.restante').classList.remove('alert-success', 'alert-danger')
             document.querySelector('.restante').classList.add('alert-warning')
         }else{
-            document.querySelector('.restante').classList.remove('alert-warning')
-            document.querySelector('.restante').classList.remove('alert-danger')
+            document.querySelector('.restante').classList.remove('alert-warning', 'alert-danger')
             document.querySelector('.restante').classList.add('alert-success')
         }
         if(restante <= 0){
