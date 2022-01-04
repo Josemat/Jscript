@@ -16,8 +16,7 @@ class Citas{
         this.citas = [];
     }
     agregarCita(cita){
-
-        console.log(cita)
+        this.citas = [...this.citas, cita]
     }
 
 }
@@ -42,6 +41,17 @@ class UI{
         setTimeout(() => {
             div.remove()
         }, 2000);
+    }
+
+    mostrarCitas({citas}){ //DESTRUCTURING desde el parametro
+
+        citas.forEach(element => {
+            const {mascota, propietario, telefono, fecha, hora, sintomas, id} = element
+            
+        });
+
+        
+        
     }
     
 
@@ -89,9 +99,23 @@ function nuevaCita(e){
         ui.imprimirAlerta('Todos los campos son obligatorios', 'error')
         return
     }
-// Agregar id
+    // Agregar id    
     citaObj.id = Date.now()
-    
+    // agregar el objeto  COMO UNA COPIA del mismo
     administrarCitas.agregarCita({...citaObj})
+    // Resetear form
+    formulario.reset()
+    // Reiniciar Objeto
+    reiniciarObj()
+    // Mostrar en el HTML
+    ui.mostrarCitas(administrarCitas)
 
-}
+    }
+function reiniciarObj(){
+    citaObj.mascota = ''
+    citaObj.propietario = ''
+    citaObj.telefono = ''
+    citaObj.fecha = ''
+    citaObj.hora = ''
+    citaObj.sintomas = ''
+    }
