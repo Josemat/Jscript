@@ -11,12 +11,21 @@ const sintomasInput = document.querySelector('#sintomas')
 const formulario = document.querySelector('#nueva-cita') //Formulario
 const listaCitas = document.querySelector('#citas') //Listado derecho de citas
 
+let modoEdicion;
+
 class Citas{
     constructor(){
         this.citas = [];
     }
     agregarCita(cita){
         this.citas = [...this.citas, cita]
+    }
+    eliminarCita(id){
+        this.citas = this.citas.filter(e=>e.id != id)
+        
+    }
+    editarCita(citaNueva){
+        this.citas = this.citas.map(cita => cita.id === citaNueva.id ? citaNueva : cita)
     }
 
 }
@@ -45,25 +54,70 @@ class UI{
 
     mostrarCitas({citas}){ //DESTRUCTURING desde el parametro
 
+        this.limpiarHTML()
+
         citas.forEach(element => {
             const {mascota, propietario, telefono, fecha, hora, sintomas, id} = element
             const div = document.createElement('div')
-            div.innerHTML = `
-            <h3>${mascota}</h3>
-            <p>${propietario}</p>
-            <p>${telefono}</p>
-            <p>${fecha}</p>
-            <p>${hora}</p>
-            <p>${sintomas}</p>
-            <p>${id}</p>
-            `
+            div.classList.add('cita','p-3')
+            div.dataset.id = id;
+
+            // Scripting de los elementos de la cita
+            const mascotaParrafo = document.createElement('h2')
+            mascotaParrafo.classList.add('card-title','font-weight-bolder');
+            mascotaParrafo.textContent = mascota 
+
+            const propietarioParrafo = document.createElement('p')
+            propietarioParrafo.innerHTML = `<span class="font-weight-bolder">Propietario: </span> ${propietario}`
+            const telefonoParrafo = document.createElement('p')
+            telefonoParrafo.innerHTML = `<span class="font-weight-bolder">Telefono: </span> ${telefono}`
+            const fechaParrafo = document.createElement('p')
+            fechaParrafo.innerHTML = `<span class="font-weight-bolder">Fecha: </span> ${fecha}`
+            const horaParrafo = document.createElement('p')
+            horaParrafo.innerHTML = `<span class="font-weight-bolder">Hora: </span> ${hora}`
+            const sintomasParrafo = document.createElement('p')
+            sintomasParrafo.innerHTML = `<span class="font-weight-bolder">Síntomas: </span> ${sintomas}`
+
+            // Boton eliminar
+            const btnEliminar = document.createElement('button')
+            btnEliminar.classList.add('btn','btn-danger','mr-2')
+            btnEliminar.innerHTML = `Eliminar &times`
+            btnEliminar.onclick = ()=>{
+                eliminarCita(id)
+            }
+
+            // Boton editar cita
+            const btnEditar = document.createElement('button')
+            btnEditar.className = 'btn btn-info'
+            btnEditar.innerHTML = `Editar &larr;`
+            btnEditar.onclick = ()=>{
+                editarCita(element)
+            }
+
+            // Agregamos los elementos al div
+            div.appendChild(mascotaParrafo)
+            div.appendChild(propietarioParrafo)
+            div.appendChild(telefonoParrafo)
+            div.appendChild(fechaParrafo)
+            div.appendChild(horaParrafo)
+            div.appendChild(sintomasParrafo)
+            div.appendChild(btnEliminar)
+            div.appendChild(btnEditar)
+
+            // Agregamos el div al HTML
             listaCitas.appendChild(div)
+            
         });
 
         
         
+        
     }
-    
+    limpiarHTML(){
+            while(listaCitas.firstChild){
+                listaCitas.removeChild(listaCitas.firstChild)
+            }
+        }
 
 }
 
@@ -97,8 +151,6 @@ const citaObj = {
 function datoscita(e){
     citaObj[e.target.name] = e.target.value
     }
-    
-
 
 function nuevaCita(e){
     e.preventDefault()
@@ -109,10 +161,24 @@ function nuevaCita(e){
         ui.imprimirAlerta('Todos los campos son obligatorios', 'error')
         return
     }
+
+    if(modoEdicion){
+        ui.imprimirAlerta('Cita actualizada correctamente')
+        // metodo para actualizar valores
+        administrarCitas.editarCita({...citaObj})
+        // actualizar boton a valor anterior
+        
+    formulario.querySelector('button[type="submit"]').textContent = "CREAR CITA"
+    modoEdicion= false;
+    }else{
     // Agregar id    
     citaObj.id = Date.now()
     // agregar el objeto  COMO UNA COPIA del mismo
     administrarCitas.agregarCita({...citaObj})
+    // Agregar mensaje de agregado
+    ui.imprimirAlerta('Cita creada correctamente')   
+    }
+    
     // Resetear form
     formulario.reset()
     // Reiniciar Objeto
@@ -129,3 +195,37 @@ function reiniciarObj(){
     citaObj.hora = ''
     citaObj.sintomas = ''
     }
+
+function eliminarCita(id){
+    // Eliminar el id desde la clase
+    administrarCitas.eliminarCita(id)
+    // mostrar mensaje
+    ui.imprimirAlerta('Cita eliminada correctamente!')
+    // actualizar HTML
+    ui.mostrarCitas(administrarCitas)
+
+}
+
+function editarCita(cita){
+    const {mascota, propietario, telefono, fecha, hora, sintomas, id} = cita;
+    // Agregar los datos a los inputs
+    mascotaInput.value = mascota
+    propietarioInput.value = propietario
+    telefonoInput.value = telefono
+    fechaInput.value = fecha
+    horaInput.value = hora
+    sintomasInput.value = sintomas
+
+    // agregar los datos al obj
+    citaObj.mascota = mascota
+    citaObj.propietario = propietario
+    citaObj.telefono = telefono
+    citaObj.fecha = fecha 
+    citaObj.hora = hora
+    citaObj.sintomas = sintomas
+    citaObj.id = id
+
+    formulario.querySelector('button[type="submit"]').textContent = "Guardar cambios"
+    modoEdicion = true;
+
+}
