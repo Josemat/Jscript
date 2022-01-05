@@ -47,7 +47,17 @@ class UI{
 
         citas.forEach(element => {
             const {mascota, propietario, telefono, fecha, hora, sintomas, id} = element
-            
+            const div = document.createElement('div')
+            div.innerHTML = `
+            <h3>${mascota}</h3>
+            <p>${propietario}</p>
+            <p>${telefono}</p>
+            <p>${fecha}</p>
+            <p>${hora}</p>
+            <p>${sintomas}</p>
+            <p>${id}</p>
+            `
+            listaCitas.appendChild(div)
         });
 
         
