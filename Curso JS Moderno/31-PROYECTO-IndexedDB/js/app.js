@@ -18,8 +18,11 @@ const heading = document.querySelector('#administra');
 
 
 let editando = false;
+let DB;
 
-
+window.onload = ()=>{
+    crearDB();
+}
 // Eventos
 eventListeners();
 function eventListeners() {
@@ -262,4 +265,23 @@ function cargarEdicion(cita) {
 
     editando = true;
 
+}
+
+function crearDB(){
+    //Crear DB  & version
+    const crearDB = window.indexedDB.open('citas', 1.0 )
+    // En caso de que sea error
+    crearDB.onerror = function(){
+        console.log('Falló la creacion de DB')
+    }
+    // En caso de que sea success
+    crearDB.onsuccess = function(){
+        console.log('La DB se creo satisfactoriamente')
+        DB = crearDB.result
+        console.log(DB)
+
+
+
+    }
+    
 }
