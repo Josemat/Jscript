@@ -18,15 +18,16 @@
         crearDB.onupgradeneeded = (e)=>{
 
             const db = e.target.result
-            const objectStore = db.createObjectStore('crm', {keypath: 'id', autoIncrement: true})
+            
+            const objectStore = db.createObjectStore('crm', { keyPath:'id' , autoIncrement: true})
 
             objectStore.createIndex('nombre','nombre',{unique:false})
-            objectStore.createIndex('correo','correo',{unique:true})
+            objectStore.createIndex('email','email',{unique:true})
             objectStore.createIndex('telefono','telefono',{unique:false})
             objectStore.createIndex('empresa','empresa',{unique:false})
             objectStore.createIndex('id','id',{unique:true})
 
-            console.log('DB lista y creada!')
+            console.log('DB lista y creada!') 
         }
         
     }
