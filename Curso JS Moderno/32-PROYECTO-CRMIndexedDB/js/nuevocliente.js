@@ -65,6 +65,9 @@
         transaction.oncomplete = function(){
             console.log('Cliente creado exitosamente!')
             imprimirAlerta('El cliente fue creado exitosamente!')
+            setTimeout(() => {
+                window.location.href = 'index.html'
+            }, 2250);
         }
 
     }
@@ -81,7 +84,7 @@
             
         }else{
             div.className = 'alert bg-green-100 border border-green-400 text-green-700 mt-5 px-4 py-3 rounded relative'
-        
+            
         }
         formulario.appendChild(div)
 
@@ -92,6 +95,7 @@
         
         
     }
+    
 
 
 

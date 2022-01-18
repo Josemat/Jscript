@@ -1,7 +1,10 @@
 (function(){ //IIFE nos permitia ejecutar el codigo de manera local
 
     let DB;
-    document.addEventListener('DOMContentLoaded',crearDB)
+    document.addEventListener('DOMContentLoaded',()=>{
+        crearDB();
+        mostrarClientes();
+    })
 
     function crearDB(){
         const crearDB = window.indexedDB.open('crm', 1)
@@ -32,6 +35,29 @@
         
     }
 
+    function mostrarClientes(){
+        //abrir la conexion
+        const abrirConexion = window.indexedDB.open('crm', 1)
+        abrirConexion.onerror= function(){
+            console.error('Hubo un error mostrando los clientes')
+        }
+        abrirConexion.onsuccess = function(){
+            //Obtenemos los datos de la DB
+            const objectStore = DB.transaction('crm').objectStore('crm')
+            objectStore.openCursor().onsuccess = function(e){
+                const cursor = e.target.result
+                if(cursor){
+                    const {nombre, email, telefono, empresa, id} = cursor.value
+                    
+
+                    cursor.continue();
+                }
+            }
+        }
+
+        }
+    
+    
     
 
 
