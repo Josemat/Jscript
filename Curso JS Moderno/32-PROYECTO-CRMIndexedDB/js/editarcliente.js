@@ -1,6 +1,12 @@
 (function(){
 
+   const nombreInput = document.querySelector('#nombre')
+   const emailInput  = document.querySelector('#email')
+   const telefonoInput = document.querySelector('#telefono')
+   const empresaInput = document.querySelector('#empresa')
+    let idCliente;
     document.addEventListener('DOMContentLoaded',()=>{
+        conectarDB()
         const cliente = window.location.search.slice(4)
         
         /*
@@ -9,18 +15,20 @@
         const idCliente = parametrosURL.get('id')
         console.log(idCliente)
         */
-
+        const formulario = document.querySelector('#formulario')
+            formulario.addEventListener('submit',guardarCliente)
         // DEBEMOS validar si hay busqueda de id 
         if(cliente){
             
         editarCliente(cliente)
         }else
         console.log('No hay nada pa mostrar')
+
     })
-    const formulario = document.querySelector('#formulario')
-    formulario.addEventListener('submit',guardarCliente)
+    
     
     let DB;
+    
     function editarCliente(cliente){
         
         //abrir la conexion
@@ -40,13 +48,20 @@
                     
                     const cliente1 = cursor.value.id
                     const cliente2 = Number(cliente)
+
+                    // console.log(cliente1)
+                    // console.log(cliente2)
                     
                     if(cliente1 === cliente2){
-                        const {nombre, email, telefono, empresa } = cursor.value
-                        document.querySelector('#nombre').value = nombre
-                        document.querySelector('#email').value = email
-                        document.querySelector('#telefono').value = telefono
-                        document.querySelector('#empresa').value = empresa
+                       
+                            
+                        const {nombre, email, telefono, empresa, id } = cursor.value
+                        nombreInput.value = nombre
+                        emailInput.value = email
+                        telefonoInput.value = telefono
+                        empresaInput.value = empresa
+                        idCliente = id
+                        
                     }
                     cursor.continue()
                 }
@@ -56,7 +71,34 @@
         
     function guardarCliente(e){
         e.preventDefault()
-        console.log(e.target)
+        if(nombreInput.value === '' || emailInput.value === '' || telefonoInput.value === '' || empresaInput.value === '' ){
+            imprimirAlerta('Todos los campos son obligatorios','error')
+            return
+        }
+        const clienteActualizado = {
+            nombre: nombreInput.value,
+            email: emailInput.value,
+            telefono: telefonoInput.value,
+            empresa: empresaInput.value,
+            id: idCliente
+        }
+        console.log(clienteActualizado)
+
+
+
+
+
+        
+        const transaction = DB.transaction(['crm'], 'readwrite')
+        const objectStore = transaction.objectStore('crm')
+        
+        objectStore.put(clienteActualizado)
+        transaction.onerror = ()=>{
+            imprimirAlerta('Hubo un error inesperado','error')
+        }
+        transaction.oncomplete= function(){
+            imprimirAlerta('Cliente actualizado correctamente')
+        }
     }
 
 })();
