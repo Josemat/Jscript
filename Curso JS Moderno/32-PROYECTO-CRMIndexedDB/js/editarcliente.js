@@ -17,8 +17,8 @@
         }else
         console.log('No hay nada pa mostrar')
     })
-
-    
+    const formulario = document.querySelector('#formulario')
+    formulario.addEventListener('submit',guardarCliente)
     
     let DB;
     function editarCliente(cliente){
@@ -32,12 +32,12 @@
         abrirConexion.onsuccess = function(){
             DB = abrirConexion.result
             //Obtenemos los datos de la DB
-            console.log('Bien')
+            
             const objectStore = DB.transaction('crm').objectStore('crm')
             objectStore.openCursor().onsuccess = function(e){
                 const cursor = e.target.result
                 if(cursor){
-                    console.log(cursor.value.id)
+                    
                     const cliente1 = cursor.value.id
                     const cliente2 = Number(cliente)
                     
@@ -54,5 +54,9 @@
             }
         }
         
+    function guardarCliente(e){
+        e.preventDefault()
+        console.log(e.target)
+    }
 
 })();
