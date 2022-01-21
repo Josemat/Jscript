@@ -1,4 +1,8 @@
 
+    
+    let DB;
+    const formulario = document.querySelector('#formulario')
+    
     function conectarDB(){
         const abrirConexion = window.indexedDB.open('crm', 1)
 

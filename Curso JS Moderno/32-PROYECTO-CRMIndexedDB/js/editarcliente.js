@@ -19,53 +19,44 @@
             formulario.addEventListener('submit',guardarCliente)
         // DEBEMOS validar si hay busqueda de id 
         if(cliente){
-            
+            setTimeout(() => {//El timeout sirve para que cuando aparece el clasico que no se pueden leer propiedades de 'transaction' es porque conectarse a la DB demora, entonces al llamar la funcion con delay le da tiempo a generar la conexion                
         editarCliente(cliente)
+            }, 50);
         }else
         console.log('No hay nada pa mostrar')
 
     })
     
     
-    let DB;
+ 
     
     function editarCliente(cliente){
         
-        //abrir la conexion
-        const abrirConexion = window.indexedDB.open('crm', 1)
         
-        abrirConexion.onerror= function(){
-            console.error('Hubo un error mostrando los clientes')
-        }
-        abrirConexion.onsuccess = function(){
-            DB = abrirConexion.result
-            //Obtenemos los datos de la DB
-            
-            const objectStore = DB.transaction('crm').objectStore('crm')
-            objectStore.openCursor().onsuccess = function(e){
-                const cursor = e.target.result
-                if(cursor){
-                    
-                    const cliente1 = cursor.value.id
-                    const cliente2 = Number(cliente)
+        const objectStore = DB.transaction('crm').objectStore('crm')
+        objectStore.openCursor().onsuccess = function(e){
+            const cursor = e.target.result
+            if(cursor){
+                
+                const cliente1 = cursor.value.id
+                const cliente2 = Number(cliente)
 
-                    // console.log(cliente1)
-                    // console.log(cliente2)
-                    
-                    if(cliente1 === cliente2){
-                       
-                            
-                        const {nombre, email, telefono, empresa, id } = cursor.value
-                        nombreInput.value = nombre
-                        emailInput.value = email
-                        telefonoInput.value = telefono
-                        empresaInput.value = empresa
-                        idCliente = id
+                // console.log(cliente1)
+                // console.log(cliente2)
+                
+                if(cliente1 === cliente2){
+                   
                         
-                    }
-                    cursor.continue()
+                    const {nombre, email, telefono, empresa, id } = cursor.value
+                    nombreInput.value = nombre
+                    emailInput.value = email
+                    telefonoInput.value = telefono
+                    empresaInput.value = empresa
+                    idCliente = id
+                    
                 }
-                }
+                cursor.continue()
+            }
             }
         }
         
@@ -82,12 +73,6 @@
             empresa: empresaInput.value,
             id: idCliente
         }
-        console.log(clienteActualizado)
-
-
-
-
-
         
         const transaction = DB.transaction(['crm'], 'readwrite')
         const objectStore = transaction.objectStore('crm')

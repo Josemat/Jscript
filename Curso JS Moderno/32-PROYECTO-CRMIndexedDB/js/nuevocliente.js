@@ -1,7 +1,6 @@
 (function(){
 
-    let DB;
-    const formulario = document.querySelector('#formulario')
+    
     document.addEventListener('DOMContentLoaded',()=>{
         conectarDB();
         
@@ -34,7 +33,7 @@
                 }
                 crearNuevoCliente(cliente) //Le enviamos el objeto que acabamos de crear a la funcion de crear cliente
                 
-        console.log(cliente)
+                
         setTimeout(() => {
             formulario.reset()
         }, 1000);
@@ -42,22 +41,24 @@
     }
 
     function crearNuevoCliente(cliente){
-        const transaction = DB.objectStore(['crm'], 'readwrite')
-        //El objectStore ees el que hace las acciones, entonces lo creamos
-        const objectStore = transaction.objectStore('crm')
 
-        objectStore.add(cliente)
+            const transaction = DB.transaction(['crm'], 'readwrite')
+            //El objectStore ees el que hace las acciones, entonces lo creamos
+            const objectStore = transaction.objectStore('crm')
+    
+            objectStore.add(cliente)
+    
+            transaction.onerror = function(){
+                console.log('Hubo un error creando el cliente')
+            }
+            transaction.oncomplete = function(){
+                
+                imprimirAlerta('El cliente fue creado exitosamente!')
+                setTimeout(() => {
+                    window.location.href = 'index.html'
+                }, 2250);
+            }
 
-        transaction.onerror = function(){
-            console.log('Hubo un error creando el cliente')
-        }
-        transaction.oncomplete = function(){
-            console.log('Cliente creado exitosamente!')
-            imprimirAlerta('El cliente fue creado exitosamente!')
-            setTimeout(() => {
-                window.location.href = 'index.html'
-            }, 2250);
-        }
 
     }
 
