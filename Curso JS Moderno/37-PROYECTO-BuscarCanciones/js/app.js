@@ -7,6 +7,7 @@ UI.formularioBuscar.addEventListener('submit',buscarCancion)
 
 function buscarCancion(e){
     e.preventDefault()
+    
     const artista = document.querySelector('#artista').value
     const cancion = document.querySelector('#cancion').value
 
@@ -22,8 +23,9 @@ function buscarCancion(e){
         return
     }
         const consultarApi = new API(artista, cancion)
-        consultarApi.limpiarHTML()
-        // consultarApi.busqueda()
         // Consultar nuestra API
+        consultarApi.busqueda()
+        
+        
     
 }
