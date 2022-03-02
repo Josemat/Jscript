@@ -1,7 +1,12 @@
 const formulario = document.querySelector('#formulario')
 const resultado = document.querySelector('#resultado')
-let resultadosPorPagina = 40;
+const paginacionDiv = document.querySelector('#paginacion')
+
+let resultadosPorPagina = 30;
 let totalPaginas;
+let iterador;
+let paginaActual = 1;
+
 window.onload = ()=>{
     formulario.addEventListener('submit',buscarImagen)
 
@@ -14,21 +19,36 @@ function buscarImagen(e){
         // Mostrar Mensaje error
         mostrarMensaje('El campo de busqueda no puede estar vacío')
         return
-    }else{
-        const   key = '25869098-e5cae873ecd1a395389e346ef',
-        // Por si necesita pasar por regular expressions
-        rE = /( )/g,
-        terminoBusqueda= termino.replace(rE,'+')
-        url = `https://pixabay.com/api/?key=${key}&q=${terminoBusqueda}`
+    }
+        buscarImagen2()
+    
+}
+
+function buscarImagen2(){
+
+    const termino = document.querySelector('#termino').value    
+    const   key = '25869098-e5cae873ecd1a395389e346ef',
+    // Por si necesita pasar por regular expressions
+    rE = /( )/g,
+    terminoBusqueda= termino.replace(rE,'+')
+    url = `https://pixabay.com/api/?key=${key}&q=${terminoBusqueda}&per_page=${resultadosPorPagina}&page=${paginaActual}`
+
+
+fetch(url)
+.then(respuesta => respuesta.json())
+.then(resultado =>{
+    totalPaginas =  paginador(resultado.totalHits)
+    busqueda(resultado.hits)
+                  
+})
+}
+
+
+// Generador que va a registrar la cantidad de elementos de acuerdo a la pagina
+function *crearPaginador(total){
+    for(let i = 1; i<=total;i++){
+        yield i;
         
-        
-        fetch(url)
-            .then(respuesta => respuesta.json())
-            .then(resultado =>{
-                busqueda(resultado.hits)
-                totalPaginas =  paginador(resultado.totalHits)
-                console.log(totalPaginas)
-            })
     }
 }
 
@@ -82,4 +102,34 @@ function busqueda(resultadoBusqueda){
         </div>
         `
     });
+    // Limpiar html del paginador.
+    while(paginacionDiv.firstChild){
+        paginacionDiv.removeChild(paginacionDiv.firstChild)
+    }
+    // Generamos el paginador
+    imprimirPaginador()
+}
+function imprimirPaginador(){
+     iterador = crearPaginador(totalPaginas)
+     
+     console.log(Boolean(iterador))
+     while(true){
+         const {value, done} = iterador.next();
+         if(done) return;
+
+         // Caso contrario, genera un boton por cada elemento en el generador
+         const boton = document.createElement('a');
+         boton.href = "#formulario";
+         boton.dataset.pagina = value;
+         boton.textContent = value;
+         boton.classList.add('siguiente','bg-yellow-400','px-4','mr-2','font-bold','mb-4','uppercase','rounded');
+         boton.onclick = ()=>{
+             paginaActual = value
+             buscarImagen2();
+         }
+
+           
+        paginacionDiv.appendChild(boton);
+     }
+
 }
