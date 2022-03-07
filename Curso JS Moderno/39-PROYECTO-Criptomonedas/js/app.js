@@ -3,8 +3,8 @@ const monedaSelect = document.querySelector('#moneda')
 const formulario = document.querySelector('#formulario')
 const resultado =  document.querySelector('#resultado')
 const objBusqueda = {
-    moneda: '',
-    criptomoneda: ''
+    moneda : '',
+    criptomoneda : ''
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     // formulario.addEventListener('submit',leerDatosFormulario)
     formulario.addEventListener('submit',submitFormulario)
     criptomonedasSelect.addEventListener('change',leerValor)
-    // monedaSelect.addEventListener('change',leerValor)
+    monedaSelect.addEventListener('change',leerValor)
 })
 
 //Creando un nuevo Promise 
@@ -21,19 +21,19 @@ const  obtenerCriptomonedas = criptomonedas => new Promise(resolve =>{
 });
 
 function leerValor(e){
-    console.log(e.target)
-    objBusqueda[e.target.Name] = e.target.value
+    objBusqueda[e.target.name] = e.target.value
     console.log(objBusqueda)
 }
 
 function submitFormulario(e){
     e.preventDefault()
-    const moneda = document.querySelector('#moneda').value
-    const criptoMoneda = document.querySelector('#criptomonedas').value
-    if(moneda === ''|| criptoMoneda === ''){
-        mensaje('Todos los campos son necesarios! intenta agregando uno')
+    const {moneda, criptomoneda} = objBusqueda
+    if(moneda === ''|| criptomoneda === ''){
+        mensaje('Todos los campos son necesarios!')
         return
     }
+    consultarCripto(moneda, criptomoneda)
+    spinner()
 }
 /*
 function leerDatosFormulario(e){
@@ -49,7 +49,7 @@ function leerDatosFormulario(e){
 }
 */
 function spinner(){
-    console.log('desde spinner')
+    
     const div = document.createElement('div')
     div.innerHTML= `
         <div class="spinner">
@@ -62,7 +62,7 @@ function spinner(){
 }
 
 function consultarCripto(moneda, criptoMoneda){
-    const url =`https://min-api.cryptocompare.com/data/price?fsym=${criptoMoneda}&tsyms=${moneda}`
+    const url =`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptoMoneda}&tsyms=${moneda}`
 
     limpiarHTML()
     fetch(url)
