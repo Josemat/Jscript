@@ -22,7 +22,6 @@ const  obtenerCriptomonedas = criptomonedas => new Promise(resolve =>{
 
 function leerValor(e){
     objBusqueda[e.target.name] = e.target.value
-    console.log(objBusqueda)
 }
 
 function submitFormulario(e){
@@ -58,7 +57,7 @@ function spinner(){
         <div class="bounce3"></div>
         </div>
     `
-    formulario.appendChild(div)
+    resultado.appendChild(div)
 }
 
 function consultarCripto(moneda, criptoMoneda){
@@ -67,7 +66,7 @@ function consultarCripto(moneda, criptoMoneda){
     limpiarHTML()
     fetch(url)
         .then(respuesta =>respuesta.json())
-        .then(resultado => console.log(resultado))
+        .then(resultado => mostrarCotizacionHTML(resultado.DISPLAY[criptoMoneda][moneda]))
 }
 function mensaje(mensaje){
     const   div = document.createElement('p'),
@@ -110,3 +109,32 @@ function limpiarHTML(){
         resultado.removeChild(resultado.firstChild)
     }
 }
+
+function mostrarCotizacionHTML(cotizacion){
+    
+    
+    const {PRICE, CHANGEPCT24HOUR, HIGHDAY, LOWDAY, LASTUPDATE} = cotizacion,
+        precio = document.createElement('p')
+        precio.classList.add('precio')
+        precio.innerHTML = `El precio es <span>${PRICE }</span>` 
+
+        const precioAlto = document.createElement('p')
+        precioAlto.innerHTML = `<p>Precio más alto del día ${HIGHDAY}</p>`
+
+        const precioBajo = document.createElement('p')
+        precioBajo.innerHTML = `<p>Precio más bajo del día ${LOWDAY}</p>`
+
+        const variacion = document.createElement('p')
+        variacion.innerHTML = `<p>Variación en últimas 24hs: ${CHANGEPCT24HOUR}%</p>`
+
+        const ultimaActualizacion = document.createElement('p')
+        ultimaActualizacion.innerHTML = `<p>Última actualización: ${LASTUPDATE}</p>`
+
+        limpiarHTML()
+
+        resultado.appendChild(precio)
+        resultado.appendChild(precioAlto)
+        resultado.appendChild(precioBajo)
+        resultado.appendChild(variacion)
+        resultado.appendChild(ultimaActualizacion)
+    }
