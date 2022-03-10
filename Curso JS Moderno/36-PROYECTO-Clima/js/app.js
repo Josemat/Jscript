@@ -25,7 +25,7 @@ function buscarClima(e){
 
 function consultarAPI(ciudad, pais){
     const appID = '6f231086fc72a5c8601271fc9006dfa8';
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appID}&units=metric`
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appID}&units=metric`
 
     spinner() // Mostramos el spinner de carga
 
