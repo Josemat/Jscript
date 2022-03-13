@@ -6,7 +6,7 @@ const mensaje = document.querySelector('#mensaje')
 const formulario = document.querySelector('#enviar-mail')
 const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const spinner = document.querySelector('#spinner')
-
+const resetBtn = document.querySelector('#resetBtn')
 
 eventListeners()
 function eventListeners(){
@@ -15,6 +15,7 @@ function eventListeners(){
     asunto.addEventListener('blur', validarFormulario)
     mensaje.addEventListener('blur', validarFormulario)
     formulario.addEventListener('submit', enviarEmail)
+    resetBtn.addEventListener('click',resetFormulario)
 }
 
 //Funciones
@@ -28,7 +29,7 @@ function validarFormulario(e){
     
     if(e.target.value.length > 0){
 
-        const errors = document.querySelector('p.error')
+        const errors = document.querySelector('.error')
         if (errors)
         {errors.remove()}
 
@@ -60,6 +61,9 @@ function validarFormulario(e){
     if(re.test(email.value) && asunto.value !== '' && mensaje.value !==''){
         btnEnviar.disabled=false
         btnEnviar.classList.remove('opacity-50', 'cursor-not-allowed')
+    }else{
+        iniciarApp()
+
     }
 }
 function mensajeError(mensaje){
@@ -90,4 +94,8 @@ function enviarEmail(e){
             mensajeEnviado.remove()
             },5000)
     }, 2000)
+}
+function resetFormulario(e){
+    e.preventDefault()
+    formulario.reset()
 }
