@@ -40,9 +40,28 @@ function guardarCliente(){
     console.log(cliente)
 
     
-//  Ocultar modal
+//  Ocultar modal bootstrap
     const modalFormulario   =   document.querySelector('#formulario')
     const modalBootstrap    =   bootstrap.Modal.getInstance(modalFormulario)
     modalBootstrap.hide()
     
+    mostrarSecciones()
+    obtenerPlatillos(
+
+    )
+}
+
+function obtenerPlatillos(){
+    const url = "http://localhost:4000/platillos"
+    fetch(url)
+        .then(respuesta => respuesta.json())
+        .then(resultado=>imprimirPlatillos(resultado))
+        .catch(error=>console.error(error))
+}
+function mostrarSecciones(){
+    const seccionesOcultas = document.querySelectorAll('.d-none')  //Seleccionamos las 2 secciones ocultas con d-none
+    seccionesOcultas.forEach(element=>element.classList.remove('d-none'))
+}
+function imprimirPlatillos(platillos){
+    console.log(platillos)
 }
