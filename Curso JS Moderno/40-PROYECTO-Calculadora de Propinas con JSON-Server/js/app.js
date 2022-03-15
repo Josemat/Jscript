@@ -63,5 +63,29 @@ function mostrarSecciones(){
     seccionesOcultas.forEach(element=>element.classList.remove('d-none'))
 }
 function imprimirPlatillos(platillos){
-    console.log(platillos)
+    
+    const contenido = document.querySelector('#platillos .contenido')
+    platillos.forEach(platillo=>{
+        const {id, nombre, precio, categoria} = platillo
+        const row = document.createElement('div')
+        row.classList.add('row','py-3','border-top');
+
+        const nomb = document.createElement('div')
+        nomb.classList.add('col-md-4')
+        nomb.textContent = nombre
+
+        const divPrecio = document.createElement('div')
+        divPrecio.classList.add('col-md-3','fw-bold')
+        divPrecio.textContent = `$${precio}`
+
+        const divCategoria = document.createElement('div')
+        divCategoria.classList.add('col-md-3')
+        divCategoria.textContent = `${categoria}`
+
+        
+        row.appendChild(nomb)
+        row.appendChild(divPrecio)
+        row.appendChild(divCategoria)
+        contenido.appendChild(row )
+    }) 
 }
