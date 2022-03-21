@@ -8,4 +8,4 @@ Como también webpack, node.js, express, mongodb, react, electron y mucho más!
 
 En este curso aprenderás JavaScript desde los fundamentos hasta temas más avanzados como Prototypes, Delegation, Classes, Ajax, Promises, Generadores, Orientado a Objetos, Fetch API, Async Await, Async JS, Objetos, así como consumir REST APIs entre muchos más.
 
-Proyecto abc -> <a src="./Curso JS Moderno/39-PROYECTO-Criptomonedas/index.html">Click</a>
+Proyecto abc -> <a href="./Curso JS Moderno/39-PROYECTO-Criptomonedas/index.html">Click</a>
