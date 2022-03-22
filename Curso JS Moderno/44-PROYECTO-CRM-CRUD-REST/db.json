@@ -1,7 +1,7 @@
 {
   "clientes": [
     {
-      "nombre": "Juan NUEVO!",
+      "nombre": "Juan!",
       "email": "correo2@correo.com",
       "telefono": "12",
       "empresa": "12212",
@@ -20,6 +20,13 @@
       "telefono": "pepe",
       "empresa": "pepepepe",
       "id": 28
+    },
+    {
+      "nombre": "Ross",
+      "email": "Geller@correo.com",
+      "telefono": "12903i09",
+      "empresa": "friends",
+      "id": 29
     }
   ]
 }
