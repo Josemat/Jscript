@@ -28,6 +28,10 @@ function Empleado(nombre, email, puesto){
         email,
         puesto
     }
+    Object.assign(
+        info,
+        obtenerNombre(info)
+    )
 
 }
 
