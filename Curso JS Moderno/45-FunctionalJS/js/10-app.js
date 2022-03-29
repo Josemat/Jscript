@@ -4,10 +4,18 @@ const obtenerNombre = info =>({
         console.log(`Mostrar nombre: ${info.nombre}`)
     }
 })
+const GuardarEmail = info =>({
+    agregarEmail(email){
+        console.log(`Agregando Email en :${info.nombre}`),
+        info.email = email;
+    }
+})
 
-
-
-
+const obtenerEmail = info => ({
+    mostrarEmail(){
+        console.log(`Correo: ${info.email}`)
+    }
+})
 
 function Cliente(nombre, email, empresa){
     let info = {
@@ -17,7 +25,9 @@ function Cliente(nombre, email, empresa){
     }
     return Object.assign(
         info,
-        obtenerNombre(info)
+        obtenerNombre(info),
+        GuardarEmail(info),
+        obtenerEmail(info)
     )
 
 }
@@ -28,13 +38,18 @@ function Empleado(nombre, email, puesto){
         email,
         puesto
     }
-    Object.assign(
+    return Object.assign(
         info,
         obtenerNombre(info)
     )
 
 }
 
-const cliente = Cliente('Juan','correo@correo.com','Código con juan')
+const cliente = Cliente('Juan',null,'Código con juan')
 cliente.mostrarNombre();
+cliente.agregarEmail('correo.asd');
+cliente.mostrarEmail()
 const empleado = Empleado('Pedro','correo@empresa.com','Programador')
+empleado.mostrarNombre();
+
+
