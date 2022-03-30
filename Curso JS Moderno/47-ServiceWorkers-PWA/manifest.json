@@ -3,12 +3,12 @@
     "short_name":"APV",
     "start_url":"/index.html",
     "display":"standalone",
-    "orientation":"portrait",
     "background_color":"#D41872",
     "theme_color":"#D41872",
+    "orientation":"portrait",
     "icons": [
         {
-          "src": "img/icons/Icon-72",
+          "src": "img/icons/Icon-72.png",
           "type": "image/png",
           "sizes": "72x72"
         },
