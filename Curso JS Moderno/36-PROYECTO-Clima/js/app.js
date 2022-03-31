@@ -23,22 +23,26 @@ function buscarClima(e){
     consultarAPI(ciudad, pais)
 }
 
-function consultarAPI(ciudad, pais){
+async function consultarAPI(ciudad, pais){
     const appID = '6f231086fc72a5c8601271fc9006dfa8';
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appID}&units=metric`
 
     spinner() // Mostramos el spinner de carga
+    try {
+        const respuesta = await fetch(url)
+        const resultado = await respuesta.json()
+        limpiarHTML()
+        if(resultado.cod === "404"){
+                        mostrarAlerta('Ciudad no encontrada')
+                        return
+                    }
+        mostrarClima(resultado)
 
-    fetch(url)
-        .then(success =>success.json())
-        .then(respuesta => {
-            limpiarHTML()
-            if(respuesta.cod === "404"){
-                mostrarAlerta('Ciudad no encontrada')
-                return
-            }
-            mostrarClima(respuesta)
-        })
+    } catch (error) {
+        console.error(error)
+    }
+    
+
 }
 function spinner(){
 
