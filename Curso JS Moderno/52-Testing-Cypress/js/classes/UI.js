@@ -18,7 +18,8 @@ class UI {
         } else {
             divMensaje.classList.add('alert-success');
         }
-
+        //Agregamos clase "form" para ejecutar cypress
+        divMensaje.dataset.cy="form";
         // Mensaje de error
         divMensaje.textContent = mensaje;
 
