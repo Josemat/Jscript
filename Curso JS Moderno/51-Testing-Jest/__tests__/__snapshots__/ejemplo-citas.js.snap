@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Probar la clase de ciras Agregar una nueva cita 1`] = `
+Citas {
+  "citas": Array [
+    Object {
+      "fecha": "11-11-21",
+      "hora": "10:30",
+      "id": 1648844901098,
+      "mascota": "karen",
+      "propietario": "Agus",
+      "sintomas": "duerme",
+      "telefono": "10982309",
+    },
+  ],
+}
+`;

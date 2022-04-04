@@ -4,11 +4,12 @@
   "description": "Aprendiendo JEST",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Emmanuel",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
     "jest": "^27.5.1"
   }
 }

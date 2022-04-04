@@ -1,3 +1,4 @@
+
 import Citas from './classes/Citas.js';
 import UI from './classes/UI.js';
 
@@ -123,4 +124,8 @@ export function cargarEdicion(cita) {
 
     editando = true;
 
+}
+
+export function suma (a,b){
+    return a + b;
 }
